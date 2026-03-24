@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global reset for the SSL form app */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #d0d0d0;
+}
+
+/* Remove default input/textarea browser styling globally */
+input, textarea, select {
+  -webkit-appearance: none;
+  appearance: none;
+}

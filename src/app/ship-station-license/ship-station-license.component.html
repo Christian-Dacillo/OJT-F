@@ -1,0 +1,412 @@
+<!-- Ship Station License Form Component -->
+<!-- Mimics the official NTC paper document layout -->
+
+<div class="page-wrapper" [class.preview-mode]="isPreview">
+
+  <!-- ── Toolbar (hidden on print and in preview mode) ─────────────────────── -->
+  <div class="toolbar no-print" *ngIf="!isPreview">
+    <button type="button" (click)="toggleMode()">
+      {{ isReadonly ? 'Edit Mode' : 'Read-only' }}
+    </button>
+    <button type="button" (click)="patchSampleData()">Load Sample Data</button>
+    <button type="button" class="btn-preview" (click)="togglePreview()">👁 Preview</button>
+  </div>
+
+  <!-- ── Preview toolbar (shown only in preview mode, hidden on print) ──────── -->
+  <div class="toolbar preview-toolbar no-print" *ngIf="isPreview">
+    <button type="button" class="btn-back" (click)="togglePreview()">← Back to Edit</button>
+    <button type="button" class="btn-print" (click)="print()">🖨 Print</button>
+  </div>
+
+  <!-- ── A4 Paper ───────────────────────────────────────────────────────────── -->
+  <div class="a4-paper">
+    <form [formGroup]="form" autocomplete="off">
+
+      <!-- ══ HEADER SECTION ══════════════════════════════════════════════════ -->
+      <div class="header-section">
+
+        <!-- NTC Seal image (top-left) -->
+        <div class="seal-placeholder" aria-label="NTC Seal">
+          <img src="/ntc-seal.png" alt="National Telecommunications Commission Seal" class="seal-img" />
+        </div>
+
+        <!-- Centered agency text -->
+        <div class="header-text">
+          <p class="agency-republic">REPUBLIC OF THE PHILIPPINES</p>
+          <p class="agency-name">NATIONAL TELECOMMUNICATIONS COMMISSION</p>
+          <p class="agency-address">BIR ROAD, EAST TRIANGLE DILIMAN, Q.C.</p>
+        </div>
+
+        <!-- Form number (top-right) -->
+        <div class="form-number">
+          <span class="no-label"><span class="no-superscript"></span></span>
+          <span class="no-value"></span>
+        </div>
+
+      </div>
+      <!-- end header-section -->
+
+      <!-- ══ MAIN TITLE ══════════════════════════════════════════════════════ -->
+      <div class="title-section">
+        <h1 class="main-title">SHIP STATION LICENSE</h1>
+        <p class="subtitle-italic">LICENSE DE STATION DE NAVIRE</p>
+        <p class="subtitle-italic">LICENCIA DE LA ESTACION DE BARCO</p>
+      </div>
+
+      <!-- ══ BASIC FIELDS ════════════════════════════════════════════════════ -->
+      <div class="basic-fields">
+
+        <div class="field-row">
+          <label class="field-label" for="licenseNo">License No.</label>
+          <input
+            id="licenseNo"
+            class="field-input underline-input"
+            type="text"
+            formControlName="licenseNo"
+            [attr.readonly]="isReadonly ? true : null"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label" for="periodOfValidity">Period of Validity</label>
+          <input
+            id="periodOfValidity"
+            class="field-input underline-input"
+            type="text"
+            formControlName="periodOfValidity"
+            [attr.readonly]="isReadonly ? true : null"
+          />
+        </div>
+
+      </div>
+      <!-- end basic-fields -->
+
+      <!-- ══ AUTHORIZATION PARAGRAPH ════════════════════════════════════════ -->
+      <div class="auth-paragraph">
+        <p>
+          <em>
+            In accordance with Philippine Act Nos. 3846 and 3396, both as amended, and the
+            regulations, promulgated thereunder, and the Radio Regulations annexed to the International
+            Telecommunication Convention in force, this authorization is hereby issued for the
+            installation and for the use of the radio equipment described below:
+          </em>
+        </p>
+      </div>
+
+      <!-- ══ TABLE 1 – SHIP IDENTIFICATION ══════════════════════════════════ -->
+      <table class="form-table table-1">
+        <!-- Column number header row -->
+        <thead>
+          <tr class="col-number-row">
+            <th class="col-num">1</th>
+            <th class="col-num">2</th>
+            <th class="col-num">3</th>
+            <th class="col-num">4</th>
+          </tr>
+          <tr class="col-label-row">
+            <th>Name of Ship</th>
+            <th>Call Sign or<br>other Identification</th>
+            <th>Owner of Ship</th>
+            <th>Public Correspondence<br>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="data-row">
+            <td>
+              <input type="text" formControlName="nameOfShip"
+                     class="cell-input" [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Name of Ship" />
+            </td>
+            <td>
+              <input type="text" formControlName="callSign"
+                     class="cell-input" [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Call Sign or other Identification" />
+            </td>
+            <td>
+              <input type="text" formControlName="ownerOfShip"
+                     class="cell-input" [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Owner of Ship" />
+            </td>
+            <td>
+              <input type="text" formControlName="publicCorrespondenceCategory"
+                     class="cell-input" [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Public Correspondence Category" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- end table-1 -->
+
+      <!-- ══ TABLE 2 – RADIO EQUIPMENT ══════════════════════════════════════ -->
+      <table class="form-table table-2">
+        <thead>
+          <!-- Sub-column letter header row -->
+          <tr class="col-number-row">
+            <th class="t2-num-col" colspan="2">&nbsp;</th>
+            <th class="t2-letter-col">a</th>
+            <th class="t2-letter-col">b</th>
+            <th class="t2-letter-col">c</th>
+            <th class="t2-letter-col">d</th>
+          </tr>
+          <!-- Column label row -->
+          <tr class="col-label-row">
+            <th class="t2-num-col">&nbsp;</th>
+            <th class="t2-equip-col">Equipment</th>
+            <th class="t2-particulars-col">Particulars of Equipment</th>
+            <th class="t2-power-col">Power<br>(Watts)</th>
+            <th class="t2-emission-col">Class of<br>Emission</th>
+            <th class="t2-freq-col">Frequency Bands or<br>Assigned Frequencies</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <!-- Row 5 – Main Transmitter(s) -->
+          <tr class="data-row t2-data-row">
+            <td class="t2-num-col row-num">5</td>
+            <td class="t2-equip-col equip-label">Main<br>Transmitter (s)</td>
+            <td class="t2-particulars-col">
+              <textarea formControlName="mainTxParticulars" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Main Transmitter Particulars"></textarea>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="mainTxPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Main Transmitter Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="mainTxEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Main Transmitter Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <textarea formControlName="mainTxFrequency" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Main Transmitter Frequency Bands"></textarea>
+            </td>
+          </tr>
+
+          <!-- Row 6 – Emergency Transmitter(s) -->
+          <tr class="data-row t2-data-row">
+            <td class="t2-num-col row-num">6</td>
+            <td class="t2-equip-col equip-label">Emergency<br>Transmitter (s)</td>
+            <td class="t2-particulars-col">
+              <textarea formControlName="emergencyTxParticulars" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Emergency Transmitter Particulars"></textarea>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="emergencyTxPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Emergency Transmitter Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="emergencyTxEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Emergency Transmitter Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <textarea formControlName="emergencyTxFrequency" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Emergency Transmitter Frequency Bands"></textarea>
+            </td>
+          </tr>
+
+          <!-- Row 7 – Survival Craft Transmitter(s) -->
+          <tr class="data-row t2-data-row">
+            <td class="t2-num-col row-num">7</td>
+            <td class="t2-equip-col equip-label">Survival Craft<br>Transmitter (s)</td>
+            <td class="t2-particulars-col">
+              <textarea formControlName="survivalTxParticulars" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Survival Craft Transmitter Particulars"></textarea>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="survivalTxPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Survival Craft Transmitter Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="survivalTxEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Survival Craft Transmitter Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <textarea formControlName="survivalTxFrequency" class="cell-textarea"
+                        [attr.readonly]="isReadonly ? true : null"
+                        aria-label="Survival Craft Transmitter Frequency Bands"></textarea>
+            </td>
+          </tr>
+
+          <!-- Row 8 – Other Equipment (spans 4 sub-rows) -->
+          <!-- Sub-row: Transceiver Receivers -->
+          <tr class="data-row t2-data-row other-equip-row first-other-row">
+            <td class="t2-num-col row-num" rowspan="4">8</td>
+            <td class="t2-equip-col equip-label" rowspan="4">Other Equipment</td>
+            <td class="t2-particulars-col sub-equip-cell">
+              <div class="sub-equip-row">
+                <span class="sub-equip-label">Transceiver<br>Receivers</span>
+                <span class="sub-equip-colon">:</span>
+                <input type="text" formControlName="transceiverReceiversParticulars"
+                       class="cell-input sub-input"
+                       [attr.readonly]="isReadonly ? true : null"
+                       aria-label="Transceiver Receivers Particulars" />
+              </div>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="transceiverReceiversPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Transceiver Receivers Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="transceiverReceiversEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Transceiver Receivers Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <input type="text" formControlName="transceiverReceiversFrequency" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Transceiver Receivers Frequency Bands" />
+            </td>
+          </tr>
+
+          <!-- Sub-row: Auto Alarm -->
+          <tr class="data-row t2-data-row other-equip-row">
+            <td class="t2-particulars-col sub-equip-cell">
+              <div class="sub-equip-row">
+                <span class="sub-equip-label">Auto Alarm</span>
+                <span class="sub-equip-colon">:</span>
+                <input type="text" formControlName="autoAlarmParticulars"
+                       class="cell-input sub-input"
+                       [attr.readonly]="isReadonly ? true : null"
+                       aria-label="Auto Alarm Particulars" />
+              </div>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="autoAlarmPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Auto Alarm Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="autoAlarmEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Auto Alarm Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <input type="text" formControlName="autoAlarmFrequency" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Auto Alarm Frequency Bands" />
+            </td>
+          </tr>
+
+          <!-- Sub-row: RDF -->
+          <tr class="data-row t2-data-row other-equip-row">
+            <td class="t2-particulars-col sub-equip-cell">
+              <div class="sub-equip-row">
+                <span class="sub-equip-label">RDF</span>
+                <span class="sub-equip-colon">:</span>
+                <input type="text" formControlName="rdfParticulars"
+                       class="cell-input sub-input"
+                       [attr.readonly]="isReadonly ? true : null"
+                       aria-label="RDF Particulars" />
+              </div>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="rdfPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="RDF Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="rdfEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="RDF Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <input type="text" formControlName="rdfFrequency" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="RDF Frequency Bands" />
+            </td>
+          </tr>
+
+          <!-- Sub-row: Radar -->
+          <tr class="data-row t2-data-row other-equip-row last-other-row">
+            <td class="t2-particulars-col sub-equip-cell">
+              <div class="sub-equip-row">
+                <span class="sub-equip-label">Radar</span>
+                <span class="sub-equip-colon">:</span>
+                <input type="text" formControlName="radarParticulars"
+                       class="cell-input sub-input"
+                       [attr.readonly]="isReadonly ? true : null"
+                       aria-label="Radar Particulars" />
+              </div>
+            </td>
+            <td class="t2-power-col">
+              <input type="text" formControlName="radarPower" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Radar Power" />
+            </td>
+            <td class="t2-emission-col">
+              <input type="text" formControlName="radarEmission" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Radar Class of Emission" />
+            </td>
+            <td class="t2-freq-col">
+              <input type="text" formControlName="radarFrequency" class="cell-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Radar Frequency Bands" />
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <!-- end table-2 -->
+
+      <!-- ══ BOTTOM SECTION ═════════════════════════════════════════════════ -->
+      <div class="bottom-section">
+
+        <!-- Left: Issued on + CN Number -->
+        <div class="bottom-left">
+          <div class="field-row bottom-field-row">
+            <label class="field-label" for="issuedOn">Issued on</label>
+            <input
+              id="issuedOn"
+              class="field-input underline-input short-input"
+              type="text"
+              formControlName="issuedOn"
+              [attr.readonly]="isReadonly ? true : null"
+            />
+          </div>
+
+          <div class="field-row bottom-field-row cn-row">
+            <label class="field-label" for="cnNumber">CN Number</label>
+            <input
+              id="cnNumber"
+              class="field-input underline-input short-input"
+              type="text"
+              formControlName="cnNumber"
+              [attr.readonly]="isReadonly ? true : null"
+            />
+          </div>
+        </div>
+
+        <!-- Right: By Authority -->
+        <div class="bottom-right">
+          <p class="by-authority">By Authority of the Commissioner:</p>
+          <div class="signature-line"></div>
+        </div>
+
+      </div>
+      <!-- end bottom-section -->
+
+      <!-- ══ FOOTER NOTE ════════════════════════════════════════════════════ -->
+      <div class="footer-note">
+        <p>Note: This license is valid only when payment of the required fees is indicated hereon.</p>
+      </div>
+
+    </form>
+  </div>
+  <!-- end a4-paper -->
+
+</div>
+<!-- end page-wrapper -->

@@ -753,65 +753,49 @@ $page-padding: 28px 36px 24px 36px;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PRINT DATA ONLY MODE
-// Body gets class 'print-data-only' — template hidden, data values visible
-// positioned exactly where the form fields are
+// Everything invisible except input/textarea values — layout unchanged
 // ─────────────────────────────────────────────────────────────────────────────
 @media print {
   body.print-data-only {
 
-    // Hide ALL template chrome: borders, labels, headers, seal, paragraph
-    .header-section,
-    .title-section,
-    .auth-paragraph,
-    .footer-note,
-    .agency-republic,
-    .agency-name,
-    .agency-address,
-    .form-number,
-    .seal-placeholder,
-    .col-number-row,
-    .col-label-row,
-    .equip-label,
-    .row-num,
-    .sub-equip-label,
-    .sub-equip-colon,
-    .marina-label,
-    .field-label,
-    .by-authority,
-    .by-attor,
-    .by-atty,
-    .signature-line {
+    .page-wrapper { background: #fff !important; }
+    .a4-paper     { box-shadow: none !important; }
+
+    // Step 1: hide EVERYTHING — visibility:hidden keeps all spacing/positions intact
+    .a4-paper * {
       visibility: hidden !important;
-    }
-
-    // Hide all table borders — make them transparent/invisible
-    .form-table,
-    .form-table th,
-    .form-table td {
       border-color: transparent !important;
+      background: transparent !important;
+      color: transparent !important;
+      -webkit-text-fill-color: transparent !important;
     }
 
-    // Keep the layout intact so data stays in position
-    // Show only the input values
-    .cell-input,
-    .cell-textarea,
-    .marina-input {
+    // Step 2: also kill all table borders explicitly
+    // (browsers paint borders even on visibility:hidden elements)
+    .a4-paper table,
+    .a4-paper th,
+    .a4-paper td,
+    .a4-paper tr,
+    .a4-paper thead,
+    .a4-paper tbody,
+    .a4-paper .form-table,
+    .a4-paper .form-table th,
+    .a4-paper .form-table td {
+      border: none !important;
+      border-color: transparent !important;
+      background: transparent !important;
+      outline: none !important;
+    }
+
+    // Step 3: show ONLY the inputs and textareas in their exact positions
+    .a4-paper input,
+    .a4-paper textarea {
       visibility: visible !important;
       color: #000 !important;
+      -webkit-text-fill-color: #000 !important;
       background: transparent !important;
       border: none !important;
-    }
-
-    .underline-input {
-      visibility: visible !important;
-      color: #000 !important;
-      background: transparent !important;
-      border: none !important;
-      border-bottom: none !important;
-    }
-
-    // Keep the a4-paper layout so positions are preserved
-    .a4-paper {
+      outline: none !important;
       box-shadow: none !important;
     }
   }

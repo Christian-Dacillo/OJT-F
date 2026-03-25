@@ -35,6 +35,12 @@ export class ShipStationLicenseComponent implements OnInit {
       ownerOfShip:      [''],
       publicCorrespondenceCategory: [''],
 
+      // Marina row – between Table 1 and Table 2
+      marinaRegistration: [''],
+      marinaClass:        [''],
+      grossTonnage:       [''],
+      keel:               [''],
+
       // Table 2 – Row 5: Main Transmitter(s)
       mainTxParticulars: [''],
       mainTxPower:       [''],
@@ -75,8 +81,11 @@ export class ShipStationLicenseComponent implements OnInit {
       radarFrequency:   [''],
 
       // Bottom fields
-      issuedOn: [''],
-      cnNumber:  [''],
+      issuedOn:        [''],
+      cnNumber:        [''],
+      officialReceipt: [''],
+      amount:          [''],
+      datePaid:        [''],
     });
   }
 
@@ -112,10 +121,9 @@ export class ShipStationLicenseComponent implements OnInit {
     }
   }
 
-  // ── Preview mode: hides toolbar, shows paper only ─────────────────────────
+  // ── Preview mode ──────────────────────────────────────────────────────────
   togglePreview(): void {
     this.isPreview = !this.isPreview;
-    // preview is always readonly
     if (this.isPreview) {
       this.isReadonly = true;
       this.form.disable();
@@ -125,8 +133,17 @@ export class ShipStationLicenseComponent implements OnInit {
     }
   }
 
-  // ── Print ──────────────────────────────────────────────────────────────────
+  // ── Print full form (with template) ───────────────────────────────────────
   print(): void {
     window.print();
+  }
+
+  // ── Print data only (values aligned on invisible template) ────────────────
+  printDataOnly(): void {
+    document.body.classList.add('print-data-only');
+    window.print();
+    window.addEventListener('afterprint', () => {
+      document.body.classList.remove('print-data-only');
+    }, { once: true });
   }
 }

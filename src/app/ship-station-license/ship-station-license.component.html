@@ -10,12 +10,15 @@
     </button>
     <button type="button" (click)="patchSampleData()">Load Sample Data</button>
     <button type="button" class="btn-preview" (click)="togglePreview()">👁 Preview</button>
+    <button type="button" class="btn-print-full" (click)="print()">🖨 Print</button>
+    <button type="button" class="btn-print-data" (click)="printDataOnly()">📄 Print Data</button>
   </div>
 
   <!-- ── Preview toolbar (shown only in preview mode, hidden on print) ──────── -->
   <div class="toolbar preview-toolbar no-print" *ngIf="isPreview">
     <button type="button" class="btn-back" (click)="togglePreview()">← Back to Edit</button>
     <button type="button" class="btn-print" (click)="print()">🖨 Print</button>
+    <button type="button" class="btn-print-data" (click)="printDataOnly()">📄 Print Data</button>
   </div>
 
   <!-- ── A4 Paper ───────────────────────────────────────────────────────────── -->
@@ -137,6 +140,43 @@
       </table>
       <!-- end table-1 -->
 
+      <!-- ══ MARINA ROW – between Table 1 and Table 2 ══════════════════════ -->
+      <table class="form-table marina-row-table">
+        <tbody>
+          <tr>
+            <td class="marina-cell">
+              <span class="marina-label">Marina Registration:</span>
+              <input type="text" formControlName="marinaRegistration"
+                     class="cell-input marina-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Marina Registration" />
+            </td>
+            <td class="marina-cell marina-cell-narrow">
+              <span class="marina-label">CLASS:</span>
+              <input type="text" formControlName="marinaClass"
+                     class="cell-input marina-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Class" />
+            </td>
+            <td class="marina-cell">
+              <span class="marina-label">Gross Tonnage:</span>
+              <input type="text" formControlName="grossTonnage"
+                     class="cell-input marina-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Gross Tonnage" />
+            </td>
+            <td class="marina-cell marina-cell-narrow">
+              <span class="marina-label">Keel:</span>
+              <input type="text" formControlName="keel"
+                     class="cell-input marina-input"
+                     [attr.readonly]="isReadonly ? true : null"
+                     aria-label="Keel" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- end marina-row -->
+
       <!-- ══ TABLE 2 – RADIO EQUIPMENT ══════════════════════════════════════ -->
       <table class="form-table table-2">
         <thead>
@@ -240,35 +280,31 @@
           </tr>
 
           <!-- Row 8 – Other Equipment (spans 4 sub-rows) -->
-          <!-- Sub-row: Transceiver Receivers -->
+          <!-- Sub-row: Transceiver / Receivers (split into two separate input lines) -->
           <tr class="data-row t2-data-row other-equip-row first-other-row">
             <td class="t2-num-col row-num" rowspan="4">8</td>
             <td class="t2-equip-col equip-label" rowspan="4">Other Equipment</td>
             <td class="t2-particulars-col sub-equip-cell">
               <div class="sub-equip-row">
-                <span class="sub-equip-label">Transceiver<br>Receivers</span>
+                <span class="sub-equip-label">Transceiver</span>
                 <span class="sub-equip-colon">:</span>
                 <input type="text" formControlName="transceiverReceiversParticulars"
                        class="cell-input sub-input"
                        [attr.readonly]="isReadonly ? true : null"
-                       aria-label="Transceiver Receivers Particulars" />
+                       aria-label="Transceiver Particulars" />
+              </div>
+              <div class="sub-equip-row">
+                <span class="sub-equip-label">Receivers</span>
+                <span class="sub-equip-colon">:</span>
+                <input type="text" formControlName="transceiverReceiversPower"
+                       class="cell-input sub-input"
+                       [attr.readonly]="isReadonly ? true : null"
+                       aria-label="Receivers Particulars" />
               </div>
             </td>
-            <td class="t2-power-col">
-              <input type="text" formControlName="transceiverReceiversPower" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Transceiver Receivers Power" />
-            </td>
-            <td class="t2-emission-col">
-              <input type="text" formControlName="transceiverReceiversEmission" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Transceiver Receivers Class of Emission" />
-            </td>
-            <td class="t2-freq-col">
-              <input type="text" formControlName="transceiverReceiversFrequency" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Transceiver Receivers Frequency Bands" />
-            </td>
+            <td class="t2-power-col other-no-border" rowspan="4"></td>
+            <td class="t2-emission-col other-no-border" rowspan="4"></td>
+            <td class="t2-freq-col other-no-border" rowspan="4"></td>
           </tr>
 
           <!-- Sub-row: Auto Alarm -->
@@ -282,21 +318,6 @@
                        [attr.readonly]="isReadonly ? true : null"
                        aria-label="Auto Alarm Particulars" />
               </div>
-            </td>
-            <td class="t2-power-col">
-              <input type="text" formControlName="autoAlarmPower" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Auto Alarm Power" />
-            </td>
-            <td class="t2-emission-col">
-              <input type="text" formControlName="autoAlarmEmission" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Auto Alarm Class of Emission" />
-            </td>
-            <td class="t2-freq-col">
-              <input type="text" formControlName="autoAlarmFrequency" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Auto Alarm Frequency Bands" />
             </td>
           </tr>
 
@@ -312,21 +333,6 @@
                        aria-label="RDF Particulars" />
               </div>
             </td>
-            <td class="t2-power-col">
-              <input type="text" formControlName="rdfPower" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="RDF Power" />
-            </td>
-            <td class="t2-emission-col">
-              <input type="text" formControlName="rdfEmission" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="RDF Class of Emission" />
-            </td>
-            <td class="t2-freq-col">
-              <input type="text" formControlName="rdfFrequency" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="RDF Frequency Bands" />
-            </td>
           </tr>
 
           <!-- Sub-row: Radar -->
@@ -340,21 +346,6 @@
                        [attr.readonly]="isReadonly ? true : null"
                        aria-label="Radar Particulars" />
               </div>
-            </td>
-            <td class="t2-power-col">
-              <input type="text" formControlName="radarPower" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Radar Power" />
-            </td>
-            <td class="t2-emission-col">
-              <input type="text" formControlName="radarEmission" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Radar Class of Emission" />
-            </td>
-            <td class="t2-freq-col">
-              <input type="text" formControlName="radarFrequency" class="cell-input"
-                     [attr.readonly]="isReadonly ? true : null"
-                     aria-label="Radar Frequency Bands" />
             </td>
           </tr>
 
@@ -390,10 +381,45 @@
           </div>
         </div>
 
+        <!-- Middle: Official Receipt / Amount / Date paid -->
+        <div class="bottom-middle">
+          <div class="field-row bottom-field-row">
+            <label class="field-label" for="officialReceipt">Official Receipt:</label>
+            <input
+              id="officialReceipt"
+              class="field-input underline-input short-input"
+              type="text"
+              formControlName="officialReceipt"
+              [attr.readonly]="isReadonly ? true : null"
+            />
+          </div>
+          <div class="field-row bottom-field-row">
+            <label class="field-label" for="amount">Amount:</label>
+            <input
+              id="amount"
+              class="field-input underline-input short-input"
+              type="text"
+              formControlName="amount"
+              [attr.readonly]="isReadonly ? true : null"
+            />
+          </div>
+          <div class="field-row bottom-field-row">
+            <label class="field-label" for="datePaid">Date paid:</label>
+            <input
+              id="datePaid"
+              class="field-input underline-input short-input"
+              type="text"
+              formControlName="datePaid"
+              [attr.readonly]="isReadonly ? true : null"
+            />
+          </div>
+        </div>
+
         <!-- Right: By Authority -->
         <div class="bottom-right">
           <p class="by-authority">By Authority of the Commissioner:</p>
-          <div class="signature-line"></div>
+          <p class="by-attor">ATTY. JUDY ANN N. BILANGEL</p>
+          <p class="by-atty">OIC REGIONAL DIRECTOR, RV</p>
         </div>
 
       </div>

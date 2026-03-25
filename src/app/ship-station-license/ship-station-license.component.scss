@@ -54,12 +54,28 @@ $page-padding: 28px 36px 24px 36px;
     &:hover { background: #f0f0f0; }
   }
 
-  // Preview button – stands out slightly
+  // Preview button
   .btn-preview {
     background: #1a3a6b;
     color: #fff;
     border-color: #1a3a6b;
     &:hover { background: #14305a; }
+  }
+
+  // Print full button
+  .btn-print-full {
+    background: #555;
+    color: #fff;
+    border-color: #555;
+    &:hover { background: #333; }
+  }
+
+  // Print Data button
+  .btn-print-data {
+    background: #27ae60;
+    color: #fff;
+    border-color: #27ae60;
+    &:hover { background: #1e8449; }
   }
 }
 
@@ -240,7 +256,7 @@ $page-padding: 28px 36px 24px 36px;
 
 .field-label {
   font-size: 11px;
-  font-style: italic;
+  font-style: normal;
   white-space: nowrap;
   margin-right: 4px;
   min-width: 110px;
@@ -346,6 +362,44 @@ $page-padding: 28px 36px 24px 36px;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// MARINA ROW – between Table 1 and Table 2
+// ─────────────────────────────────────────────────────────────────────────────
+.marina-row-table {
+  margin-top: 0;
+  border-top: none; // shares top border with table-1 bottom
+
+  td { border: $border-thin; }
+}
+
+.marina-cell {
+  padding: 4px 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+  height: 24px;
+}
+
+.marina-cell-narrow {
+  width: 12%;
+}
+
+.marina-label {
+  font-size: 10px;
+  font-style:normal;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.marina-input {
+  width: auto;
+  min-width: 80px;
+  font-size: 10.5px;
+}
+
+.marina-value {
+  font-size: 10.5px;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // TABLE 2 – RADIO EQUIPMENT
 // ─────────────────────────────────────────────────────────────────────────────
 .table-2 {
@@ -355,7 +409,7 @@ $page-padding: 28px 36px 24px 36px;
   // Column widths (approximate match to paper)
   .t2-num-col        { width: 4%;  text-align: center; }
   .t2-equip-col      { width: 13%; }
-  .t2-particulars-col{ width: 38%; }
+  .t2-particulars-col{ width: 22%; }
   .t2-power-col      { width: 9%;  text-align: center; }
   .t2-emission-col   { width: 9%;  text-align: center; }
   .t2-freq-col       { width: 27%; }
@@ -367,7 +421,7 @@ $page-padding: 28px 36px 24px 36px;
 
   .t2-data-row td {
     vertical-align: top;
-    height: 52px;
+    height: 20px;
   }
 
   .row-num {
@@ -391,6 +445,47 @@ $page-padding: 28px 36px 24px 36px;
     height: 28px;
     min-height: 28px;
   }
+
+  // Remove top border on all sub-rows except the first
+  &:not(.first-other-row) td {
+    border-top: none;
+  }
+
+  &:not(.first-other-row) .sub-equip-cell {
+    border-top: none;
+  }
+
+  // Remove right border on ALL particulars cells (merges with the open area)
+  .sub-equip-cell {
+    border-right: none !important;
+  }
+
+  // Remove bottom border on all sub-rows except the last
+  &:not(.last-other-row) .sub-equip-cell {
+    border-bottom: none;
+    border-right: none; // remove the line between particulars and merged area
+  }
+
+  // Ensure the last sub-row always has its bottom border
+  &.last-other-row td {
+    border-bottom: $border-thin !important;
+  }
+
+  // Last row particulars also removes right border
+  &.last-other-row .sub-equip-cell {
+    border-right: none;
+  }
+}
+
+// The 3 right columns in row 8 are merged (no internal lines)
+.other-no-border {
+  border-top: none !important;
+  border-bottom: $border-thin !important;
+  border-left: none !important;
+  border-right: none !important;
+
+  // Only the last of the 3 keeps the right outer border
+  &.t2-freq-col   { border-right: $border-thin !important; }
 }
 
 // Sub-equipment label + colon + input layout
@@ -427,7 +522,7 @@ $page-padding: 28px 36px 24px 36px;
   background: transparent;
   font-family: $font-serif;
   font-size: 10.5px;
-  padding: 1px 2px;
+  padding: 2px 10px;
   box-shadow: none;
   border-radius: 0;
   box-sizing: border-box;
@@ -449,13 +544,13 @@ $page-padding: 28px 36px 24px 36px;
 
 .cell-textarea {
   width: 100%;
-  height: 46px;
+  height: 85px;
   border: none;
   outline: none;
   background: transparent;
   font-family: $font-serif;
-  font-size: 10.5px;
-  padding: 2px;
+  font-size: 9px;
+  padding: 10px;
   resize: none;
   box-shadow: none;
   border-radius: 0;
@@ -489,8 +584,39 @@ $page-padding: 28px 36px 24px 36px;
   gap: 10px;
 }
 
+.bottom-middle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+
+  .field-label {
+    font-size: 9px;
+    min-width: 75px;
+    text-align: right;
+  }
+
+  .underline-input {
+    width: 90px;
+    font-size: 9px;
+  }
+}
+
 .bottom-field-row {
   margin-bottom: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+
+  .field-label {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .underline-input {
+    flex: 1;
+    width: auto;
+  }
 }
 
 .cn-row {
@@ -502,8 +628,19 @@ $page-padding: 28px 36px 24px 36px;
   min-width: 220px;
 
   .by-authority {
+    text-align: center;
     font-size: 11px;
     margin: 0 0 24px;
+  }
+
+  .by-attor {
+    text-align: center;
+    margin: 0 0 12px;
+  }
+
+  .by-atty {
+    font-size: 9px;
+    text-align: center;
   }
 
   .signature-line {
@@ -550,6 +687,7 @@ $page-padding: 28px 36px 24px 36px;
     padding: 0;
     min-height: unset;
     display: block;
+    overflow: hidden;
   }
 
   // Paper: keep side padding so table right border stays inside the page
@@ -572,13 +710,37 @@ $page-padding: 28px 36px 24px 36px;
   .form-table td {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    border: 1px solid #000 !important; // explicit override for print
+    border: 1px solid #000 !important;
   }
 
-  // Merged cells keep their borders too
-  .merged-power-emission,
-  .merged-freq {
-    border: 1px solid #000 !important;
+  // Row 8 – restore the no-border rules that the override above kills
+  .other-equip-row:not(.first-other-row) td {
+    border-top: none !important;
+  }
+
+  .other-equip-row .sub-equip-cell {
+    border-right: none !important;
+  }
+
+  .other-equip-row:not(.last-other-row) .sub-equip-cell {
+    border-bottom: none !important;
+  }
+
+  // Merged right cells – completely borderless except outer bottom and far right
+  .form-table .other-no-border,
+  .form-table td.other-no-border,
+  .form-table .t2-power-col.other-no-border,
+  .form-table .t2-emission-col.other-no-border,
+  .form-table .t2-freq-col.other-no-border {
+    border-top: none !important;
+    border-bottom: 1px solid #000 !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  // Only the very last column keeps the right outer wall
+  .form-table .t2-freq-col.other-no-border {
+    border-right: 1px solid #000 !important;
   }
 
   // Inputs look like plain text in print
@@ -586,5 +748,71 @@ $page-padding: 28px 36px 24px 36px;
   .cell-textarea,
   .underline-input {
     background: transparent !important;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PRINT DATA ONLY MODE
+// Body gets class 'print-data-only' — template hidden, data values visible
+// positioned exactly where the form fields are
+// ─────────────────────────────────────────────────────────────────────────────
+@media print {
+  body.print-data-only {
+
+    // Hide ALL template chrome: borders, labels, headers, seal, paragraph
+    .header-section,
+    .title-section,
+    .auth-paragraph,
+    .footer-note,
+    .agency-republic,
+    .agency-name,
+    .agency-address,
+    .form-number,
+    .seal-placeholder,
+    .col-number-row,
+    .col-label-row,
+    .equip-label,
+    .row-num,
+    .sub-equip-label,
+    .sub-equip-colon,
+    .marina-label,
+    .field-label,
+    .by-authority,
+    .by-attor,
+    .by-atty,
+    .signature-line {
+      visibility: hidden !important;
+    }
+
+    // Hide all table borders — make them transparent/invisible
+    .form-table,
+    .form-table th,
+    .form-table td {
+      border-color: transparent !important;
+    }
+
+    // Keep the layout intact so data stays in position
+    // Show only the input values
+    .cell-input,
+    .cell-textarea,
+    .marina-input {
+      visibility: visible !important;
+      color: #000 !important;
+      background: transparent !important;
+      border: none !important;
+    }
+
+    .underline-input {
+      visibility: visible !important;
+      color: #000 !important;
+      background: transparent !important;
+      border: none !important;
+      border-bottom: none !important;
+    }
+
+    // Keep the a4-paper layout so positions are preserved
+    .a4-paper {
+      box-shadow: none !important;
+    }
   }
 }

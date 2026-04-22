@@ -5,20 +5,21 @@
 
   <!-- ── Toolbar (hidden on print and in preview mode) ─────────────────────── -->
   <div class="toolbar no-print" *ngIf="!isPreview">
+    <button type="button" class="btn-back-edit" (click)="backToEdit()">← Back to Edit</button>
     <button type="button" (click)="toggleMode()">
       {{ isReadonly ? 'Edit Mode' : 'Read-only' }}
     </button>
     <button type="button" (click)="patchSampleData()">Load Sample Data</button>
-    <button type="button" class="btn-preview" (click)="togglePreview()">👁 Preview</button>
-    <button type="button" class="btn-print-full" (click)="print()">🖨 Print</button>
-    <button type="button" class="btn-print-data" (click)="printDataOnly()">📄 Print Data</button>
+    <button type="button" class="btn-preview" (click)="togglePreview()"> Preview</button>
+    <button type="button" class="btn-print-full" (click)="print()"> Print</button>
+    <button type="button" class="btn-print-data" (click)="printDataOnly()">Print Data</button>
   </div>
 
   <!-- ── Preview toolbar (shown only in preview mode, hidden on print) ──────── -->
   <div class="toolbar preview-toolbar no-print" *ngIf="isPreview">
     <button type="button" class="btn-back" (click)="togglePreview()">← Back to Edit</button>
-    <button type="button" class="btn-print" (click)="print()">🖨 Print</button>
-    <button type="button" class="btn-print-data" (click)="printDataOnly()">📄 Print Data</button>
+    <button type="button" class="btn-print" (click)="print()">Print</button>
+    <button type="button" class="btn-print-data" (click)="printDataOnly()"> Print Data</button>
   </div>
   <!-- ── A4 Paper ───────────────────────────────────────────────────────────── -->
   <div class="a4-paper">

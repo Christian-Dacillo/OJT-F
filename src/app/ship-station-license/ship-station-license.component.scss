@@ -62,6 +62,13 @@ $page-padding: 28px 36px 24px 36px;
     &:hover { background: #14305a; }
   }
 
+  .btn-back-edit {
+    background: #888;
+    color: #fff;
+    border-color: #888;
+    &:hover { background: #666; }
+  }
+
   // Print full button
   .btn-print-full {
     background: #555;

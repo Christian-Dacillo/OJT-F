@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ShipStationLicenseComponent } from './ship-station-license/ship-station-license.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ShipStationLicenseComponent],
-  template: `<app-ship-station-license></app-ship-station-license>`
+  imports: [RouterOutlet],
+  template: `<router-outlet></router-outlet>`
 })
 export class App {}

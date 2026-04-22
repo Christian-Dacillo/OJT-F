@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ship-station-license',
@@ -15,11 +16,19 @@ export class ShipStationLicenseComponent implements OnInit {
   isReadonly = false;
   isPreview  = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.patchSampleData();
+    // Patch data passed from the edit page
+    const state = history.state?.formData;
+    if (state) {
+      this.form.patchValue(state);
+      // If print data was requested, trigger after a short delay for render
+      if (history.state?.printData) {
+        setTimeout(() => this.printDataOnly(), 300);
+      }
+    }
   }
 
   private buildForm(): void {
@@ -99,6 +108,11 @@ export class ShipStationLicenseComponent implements OnInit {
   // Print full form with background/template
   print(): void {
     window.print();
+  }
+
+  // Back to edit page
+  backToEdit(): void {
+    this.router.navigate(['/']);
   }
 
   // Print data only — blank page, values in exact positions, then return to edit

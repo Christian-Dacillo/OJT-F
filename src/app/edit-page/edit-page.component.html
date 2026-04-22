@@ -1,0 +1,175 @@
+<div class="ep-bg">
+  <div class="ep-card">
+
+    <!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
+    <div class="ep-navbar">
+      <img src="/ntc-seal.png" alt="NTC" class="ep-seal" />
+      <div class="ep-agency">
+        <span class="ep-agency-name">National Telecommunications Commission</span>
+        <span class="ep-agency-sub">Regional Office No. 5</span>
+      </div>
+    </div>
+
+    <!-- ── TITLE BAR ──────────────────────────────────────────────────────── -->
+    <div class="ep-titlebar">SHIP STATION LICENSE</div>
+
+    <!-- ── TAB ────────────────────────────────────────────────────────────── -->
+    <div class="ep-tabs">
+      <span class="ep-tab active">General</span>
+      <div class="ep-tab-actions">
+        <button type="button" class="ep-tab-btn ep-tab-print" (click)="submit()">Print Form</button>
+        <button type="button" class="ep-tab-btn ep-tab-data" (click)="submitPrintData()">Print Data</button>
+      </div>
+    </div>
+
+    <!-- ── FORM BODY ──────────────────────────────────────────────────────── -->
+    <form [formGroup]="form" autocomplete="off" class="ep-body">
+
+      <!-- License No. -->
+      <div class="ef-row">
+        <label class="ef-lbl">License No</label>
+        <input class="ef-inp ef-wide" type="text" formControlName="licenseNo" placeholder="License No." />
+      </div>
+
+      <!-- Period of Validity -->
+      <div class="ef-row">
+        <label class="ef-lbl">Period of Validity</label>
+        <input class="ef-inp ef-wide" type="text" formControlName="periodOfValidity" placeholder="Period of Validity" />
+      </div>
+
+      <div class="ef-sep"></div>
+
+      <!-- Name of Ship -->
+      <div class="ef-row">
+        <label class="ef-lbl">Name of Ship</label>
+        <input class="ef-inp ef-wide" type="text" formControlName="nameOfShip" placeholder="Name of Ship" />
+      </div>
+
+      <!-- Call Sign + Owner -->
+      <div class="ef-row">
+        <label class="ef-lbl">Call Sign</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="callSign" placeholder="Call Sign" />
+        <label class="ef-lbl ef-lbl-mid">Owner of Ship</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="ownerOfShip" placeholder="Owner of Ship" />
+      </div>
+
+      <!-- Public Correspondence -->
+      <div class="ef-row">
+        <label class="ef-lbl">Public Correspondence</label>
+        <input class="ef-inp ef-wide" type="text" formControlName="publicCorrespondenceCategory" placeholder="Public Correspondence Category" />
+      </div>
+
+      <div class="ef-sep"></div>
+
+      <!-- Marina Registration + Class -->
+      <div class="ef-row">
+        <label class="ef-lbl">Marina Registration</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="marinaRegistration" placeholder="Marina Registration" />
+        <label class="ef-lbl ef-lbl-mid">Class</label>
+        <input class="ef-inp ef-short" type="text" formControlName="marinaClass" placeholder="Class" />
+      </div>
+
+      <!-- Gross Tonnage + Keel -->
+      <div class="ef-row">
+        <label class="ef-lbl">Gross Tonnage</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="grossTonnage" placeholder="Gross Tonnage" />
+        <label class="ef-lbl ef-lbl-mid">Keel</label>
+        <input class="ef-inp ef-short" type="text" formControlName="keel" placeholder="Keel" />
+      </div>
+
+      <div class="ef-sep"></div>
+
+      <!-- 5 – Main Transmitter -->
+      <div class="ef-section">5 — Main Transmitter(s)</div>
+      <div class="ef-row">
+        <label class="ef-lbl">Particulars</label>
+        <textarea class="ef-inp ef-wide ef-ta" formControlName="mainTxParticulars" placeholder="Particulars"></textarea>
+        <label class="ef-lbl ef-lbl-mid">Power (W)</label>
+        <input class="ef-inp ef-short" type="text" formControlName="mainTxPower" placeholder="Power" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Class of Emission</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="mainTxEmission" placeholder="Emission" />
+        <label class="ef-lbl ef-lbl-mid">Frequency Bands</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="mainTxFrequency" placeholder="Frequency" />
+      </div>
+
+      <!-- 6 – Emergency Transmitter -->
+      <div class="ef-section">6 — Emergency Transmitter(s)</div>
+      <div class="ef-row">
+        <label class="ef-lbl">Particulars</label>
+        <textarea class="ef-inp ef-wide ef-ta" formControlName="emergencyTxParticulars" placeholder="Particulars"></textarea>
+        <label class="ef-lbl ef-lbl-mid">Power (W)</label>
+        <input class="ef-inp ef-short" type="text" formControlName="emergencyTxPower" placeholder="Power" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Class of Emission</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="emergencyTxEmission" placeholder="Emission" />
+        <label class="ef-lbl ef-lbl-mid">Frequency Bands</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="emergencyTxFrequency" placeholder="Frequency" />
+      </div>
+
+      <!-- 7 – Survival Craft -->
+      <div class="ef-section">7 — Survival Craft Transmitter(s)</div>
+      <div class="ef-row">
+        <label class="ef-lbl">Particulars</label>
+        <textarea class="ef-inp ef-wide ef-ta" formControlName="survivalTxParticulars" placeholder="Particulars"></textarea>
+        <label class="ef-lbl ef-lbl-mid">Power (W)</label>
+        <input class="ef-inp ef-short" type="text" formControlName="survivalTxPower" placeholder="Power" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Class of Emission</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="survivalTxEmission" placeholder="Emission" />
+        <label class="ef-lbl ef-lbl-mid">Frequency Bands</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="survivalTxFrequency" placeholder="Frequency" />
+      </div>
+
+      <!-- 8 – Other Equipment -->
+      <div class="ef-section">8 — Other Equipment</div>
+      <div class="ef-row">
+        <label class="ef-lbl">Transceiver</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="transceiverReceiversParticulars" placeholder="Transceiver" />
+        <label class="ef-lbl ef-lbl-mid">Receivers</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="transceiverReceiversPower" placeholder="Receivers" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Auto Alarm</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="autoAlarmParticulars" placeholder="Auto Alarm" />
+        <label class="ef-lbl ef-lbl-mid">RDF</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="rdfParticulars" placeholder="RDF" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Radar</label>
+        <input class="ef-inp ef-wide" type="text" formControlName="radarParticulars" placeholder="Radar" />
+      </div>
+
+      <div class="ef-sep"></div>
+
+      <!-- Issued on + Official Receipt + CN Number -->
+      <div class="ef-row">
+        <label class="ef-lbl">Issued on</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="issuedOn" placeholder="Issued on" />
+        <label class="ef-lbl ef-lbl-mid">Official Receipt</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="officialReceipt" placeholder="Official Receipt" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">CN Number</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="cnNumber" placeholder="CN Number" />
+        <label class="ef-lbl ef-lbl-mid">Amount</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="amount" placeholder="Amount" />
+      </div>
+      <div class="ef-row">
+        <label class="ef-lbl">Date Paid</label>
+        <input class="ef-inp ef-mid" type="text" formControlName="datePaid" placeholder="Date Paid" />
+      </div>
+
+    </form>
+
+    <!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+    <div class="ep-footer">
+      <button class="ep-btn ep-cancel" type="button" (click)="cancel()">Cancel</button>
+      <button class="ep-btn ep-submit" type="button" (click)="submit()">Submit</button>
+    </div>
+
+  </div><!-- end ep-card -->
+</div>
